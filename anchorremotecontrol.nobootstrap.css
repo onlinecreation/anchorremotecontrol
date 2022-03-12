@@ -1,0 +1,99 @@
+:root {
+  --bs-white-rgb: 255,255,255;
+  --bs-primary:  #0d6efd;
+}
+.anchorremotecontrol * {
+  box-sizing: border-box;
+}
+.anchorremotecontrol .bg-white {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-white-rgb),var(--bs-bg-opacity)) !important;
+}
+.anchorremotecontrol .rounded-circle {
+  border-radius: 50% !important;
+}
+.anchorremotecontrol .rounded {
+  border-radius: .25rem !important;
+}
+.anchorremotecontrol .text-center {
+  text-align: center !important;
+}
+.anchorremotecontrol .p-2 {
+  padding: .5rem !important;
+}
+.anchorremotecontrol .mb-2 {
+  margin-bottom: .5rem !important;
+}
+.anchorremotecontrol .me-2 {
+  margin-right: .5rem !important;
+}
+.anchorremotecontrol .shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
+.anchorremotecontrol .d-inline-block {
+  display: inline-block !important;
+}
+.anchorremotecontrol .text-end {
+  text-align: right !important;
+}
+.anchorremotecontrol .bg-light {
+  --bs-bg-opacity: 1;
+}
+.anchorremotecontrol .translate-middle-y {
+  transform: translateY(-50%) !important;
+}
+.anchorremotecontrol .end-0 {
+  right: 0 !important;
+}
+.anchorremotecontrol .top-50 {
+  top: 50% !important;
+}
+.anchorremotecontrol .position-fixed {
+  position: fixed !important;
+}
+.anchorremotecontrol .list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: .25rem;
+}
+.anchorremotecontrol .text-nowrap {
+  white-space: nowrap !important;
+}
+.anchorremotecontrol .text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.anchorremotecontrol .list-group-item {
+  position: relative;
+  display: block;
+  padding: .5rem 1rem;
+  color: #212529;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
+}
+.anchorremotecontrol .list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: var(--arc-active-color, var(--bs-primary));
+  border-color:  var(--arc-active-color, var(--bs-primary));
+}
+.anchorremotecontrol .list-group-item:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.anchorremotecontrol .list-group-item-action {
+  width: 100%;
+  color: #495057;
+  text-align: inherit;
+}
+.anchorremotecontrol .list-group-item + .list-group-item {
+  border-top-width: 0;
+}
+.anchorremotecontrol .list-group-item:last-child {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
