@@ -10,7 +10,7 @@ Wherever you are on a webpage, a remote control follows you and helps you naviga
 1. If you already use Bootstrap 5, that awesome, you don't need any CSS. Else, download [anchorremotecontrol.nobootstrap.css](https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.nobootstrap.css) and include it to your website.
 
 ```html
-<link rel="stylesheet" src="anchorremotecontrol.nobootstrap.css" />
+<link rel="stylesheet" href="anchorremotecontrol.nobootstrap.css" />
 ```
 
 2. This CSS adds common Bootstrap utilities. It might have side effects on your website.
@@ -28,7 +28,7 @@ You might also direct link us:
 <script src="https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.js"></script>
 
 <!-- If you don't use Bootstrap 5, insert this befire your </head> -->
-<link rel="stylesheet" src="https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.nobootstrap.css" />
+<link rel="stylesheet" href="https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.nobootstrap.css" />
 ```
 
 ## FAQ
@@ -49,7 +49,7 @@ You might also direct link us:
   <style>
     :root{--arc-active-color: #125f00;}
   </style>
-  <link rel="stylesheet" src="https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.nobootstrap.css" />
+  <link rel="stylesheet" href="https://static.onlc.eu/scripts/anchorremotecontrol/0.0.1/anchorremotecontrol.nobootstrap.css" />
   ```
 
 ### When I scroll to a heading, it scrolls too far and my heading is hidden. How can I fix this?
