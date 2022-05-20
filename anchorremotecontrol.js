@@ -1,15 +1,14 @@
-
-let headingsPos = [];
-let headings;
-let topMargin = 0;
+let headingsPos = []
+let headings
+let topMargin = 0
 
 /**
  * Run a smooth scroll to the target position
  * @param {number} ypos Target position
  */
-function smoothScrollTo(ypos) {
+ function smoothScrollTo(ypos) {
   if (ypos < 0) {
-    ypos = 0;
+    ypos = 0
   }
   window.scroll({
     top: ypos,
@@ -18,12 +17,24 @@ function smoothScrollTo(ypos) {
 }
 
 /**
+ * Run a smooth scroll to the target anchor
+ * @param {number} ypos Target position
+ */
+ function smoothScrollToAnchor(anchorName) {
+  const anchor = document.querySelector('#' + anchorName)
+  console.log(anchorName, anchor)
+  const pos = Math.round(anchor.getBoundingClientRect().top) + window.scrollY - topMargin
+  smoothScrollTo(pos)
+}
+
+/**
  * Get the position of the target element and run a smooth scroll to it
  * @param {HTMLElement} e Target element
  */
 function scroller(e) {
-  e.preventDefault();
-  smoothScrollTo(e.target.getAttribute('data-pos') - topMargin);
+  e.preventDefault()
+  console.log(e.target)
+  smoothScrollToAnchor(e.target.getAttribute('data-anchor'))
 }
 
 /**
@@ -31,13 +42,16 @@ function scroller(e) {
  */
 function scrollEvent() {
   const closest = headingsPos.filter(function(pos) {
-    return pos >= window.scrollY && pos <= window.scrollY + window.innerHeight;
-  }).sort(function(a, b){return a-b});
-  const active = document.querySelectorAll('.anchorremotecontrol-list a.active');
+    return pos >= window.scrollY && pos <= window.scrollY + window.innerHeight
+  }).sort(function(a, b){return a-b})
+  const active = document.querySelectorAll('.anchorremotecontrol-list a.active')
   for (let i = 0; i < active.length; i++) {
-    active[i].classList.remove('active');
+    active[i].classList.remove('active')
   }
-  document.querySelector('.anchorremotecontrol-list a[data-pos="' + closest[0] + '"]').classList.add('active');
+  const closestAnchor = document.querySelector('.anchorremotecontrol-list a[data-pos="' + closest[0] + '"]').getAttribute('data-anchor')
+  if (closestAnchor) {
+    document.querySelector('.anchorremotecontrol-list a[data-anchor="' + closestAnchor + '"]').classList.add('active')
+  }
 }
 
 /**
@@ -92,7 +106,7 @@ function plantSeed() {
   </div>
 </div>
   `;
-  document.body.innerHTML += seed;
+  document.body.innerHTML += seed
 }
 
 /**
@@ -100,8 +114,8 @@ function plantSeed() {
  * @returns {Array} Array of headings
  */
 function findHeadings() {
-  const query = 'h1[id]:not([data-arc-ignore]), h2[id]:not([data-arc-ignore]), h3[id]:not([data-arc-ignore]), h4[id]:not([data-arc-ignore]), h5[id]:not([data-arc-ignore])';
-  return document.querySelectorAll(query);
+  const query = 'h1[id]:not([data-arc-ignore]), h2[id]:not([data-arc-ignore]), h3[id]:not([data-arc-ignore]), h4[id]:not([data-arc-ignore]), h5[id]:not([data-arc-ignore])'
+  return document.querySelectorAll(query)
 }
 
 /**
@@ -112,31 +126,53 @@ function findHeadings() {
  * @returns {HTMLElement}
  */
 function createAnchor(title, anchor, pos) {
-  let a = document.createElement('a');
-  a.setAttribute('href', '#' + anchor);
-  a.setAttribute('class', 'list-group-item list-group-item-action text-nowrap text-truncate');
-  a.setAttribute('data-pos', pos);
-  headingsPos.push(pos);
-  a.innerText = title;
-  a.addEventListener('click', scroller, false);
-  return a;
+  let a = document.createElement('a')
+  a.setAttribute('href', '#' + anchor)
+  a.setAttribute('class', 'list-group-item list-group-item-action text-nowrap text-truncate')
+  a.setAttribute('data-pos', pos)
+  a.setAttribute('data-anchor', anchor)
+  headingsPos.push(pos)
+  a.innerText = title
+  a.addEventListener('click', scroller, false)
+  return a
 }
 
 /**
  * Create the list
  */
 function createAnchors() {
-  headings = findHeadings();
-  const topAnchor = createAnchor('↑', 'top', 0);
-  document.querySelector('.anchorremotecontrol-list').appendChild(topAnchor);
+  headings = findHeadings()
+  const topAnchor = createAnchor('↑', 'top', 0)
+  document.querySelector('.anchorremotecontrol-list').appendChild(topAnchor)
   for (var i = 0; i < headings.length; i++) {
-    const heading = headings[i];
-    const headingId = heading.getAttribute('id');
-    const headingText = heading.innerText;
-    const pos = Math.round(headings[i].getBoundingClientRect().top) + window.scrollY;
+    const heading = headings[i]
+    const headingId = heading.getAttribute('id')
+    const headingText = heading.innerText
+    const pos = Math.round(headings[i].getBoundingClientRect().top) + window.scrollY
     const anchor = createAnchor(headingText, headingId, pos)
-    document.querySelector('.anchorremotecontrol-list').appendChild(anchor);
+    document.querySelector('.anchorremotecontrol-list').appendChild(anchor)
   }
+}
+
+/**
+ * Update anchor list
+ */
+function resetHeadingsPos() {
+  headingsPos = []
+  headings = findHeadings()
+  for (var i = 0; i < headings.length; i++) {
+    const pos = Math.round(headings[i].getBoundingClientRect().top) + window.scrollY
+    headingsPos.push(pos)
+    document.querySelector('.anchorremotecontrol-list a[data-anchor="' + headings[i].getAttribute('id') + '"]').setAttribute('data-pos', pos)
+  }
+}
+
+/**
+ * Observe body change
+ */
+function observeBodyHeightChange() {
+  const resizeObserver = new ResizeObserver(resetHeadingsPos)
+  resizeObserver.observe(document.body)
 }
 
 /**
@@ -144,12 +180,12 @@ function createAnchors() {
  */
 function initOpenClose() {
   document.querySelector('.anchorremotecontrol .openclose').addEventListener('click', function() {
-    const arc = document.querySelector('.anchorremotecontrol');
-    arc.classList.toggle('closed');
-    localStorage.setItem('anchorremotecontrol', arc.classList.contains('closed') ? 'closed' : 'open');
-  });
+    const arc = document.querySelector('.anchorremotecontrol')
+    arc.classList.toggle('closed')
+    localStorage.setItem('anchorremotecontrol', arc.classList.contains('closed') ? 'closed' : 'open')
+  })
   if (localStorage.getItem('anchorremotecontrol') === 'closed') {
-    document.querySelector('.anchorremotecontrol').classList.add('closed');
+    document.querySelector('.anchorremotecontrol').classList.add('closed')
   }
 }
 
@@ -158,13 +194,14 @@ function initOpenClose() {
  */
 function init() {
   if (typeof headingTopMargin !== 'undefined') {
-    topMargin = headingTopMargin;
+    topMargin = headingTopMargin
   }
-  plantSeed();
-  createAnchors();
-  initOpenClose();
-  scrollEvent();
-  window.addEventListener('scroll', scrollEvent, false);
+  plantSeed()
+  createAnchors()
+  initOpenClose()
+  scrollEvent()
+  observeBodyHeightChange()
+  window.addEventListener('scroll', scrollEvent, false)
 }
 
-window.addEventListener('load', init, false);
+window.addEventListener('load', init, false)
