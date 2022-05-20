@@ -18,13 +18,16 @@ let topMargin = 0
 
 /**
  * Run a smooth scroll to the target anchor
- * @param {number} ypos Target position
+ * @param {string} anchorName Target name
  */
  function smoothScrollToAnchor(anchorName) {
-  const anchor = document.querySelector('#' + anchorName)
-  console.log(anchorName, anchor)
-  const pos = Math.round(anchor.getBoundingClientRect().top) + window.scrollY - topMargin
-  smoothScrollTo(pos)
+  if (anchorName === 'top') {
+    smoothScrollTo(0)
+  } else {
+    const anchor = document.querySelector('#' + anchorName)
+    const pos = Math.round(anchor.getBoundingClientRect().top) + window.scrollY - topMargin
+    smoothScrollTo(pos)
+  }
 }
 
 /**
