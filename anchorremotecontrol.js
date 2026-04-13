@@ -51,9 +51,11 @@ function scrollEvent() {
   for (let i = 0; i < active.length; i++) {
     active[i].classList.remove('active')
   }
-  const closestAnchor = document.querySelector('.anchorremotecontrol-list a[data-pos="' + closest[0] + '"]').getAttribute('data-anchor')
-  if (closestAnchor) {
-    document.querySelector('.anchorremotecontrol-list a[data-anchor="' + closestAnchor + '"]').classList.add('active')
+  if (document.querySelector('.anchorremotecontrol-list a[data-pos="' + closest[0] + '"]')) {
+    const closestAnchor = document.querySelector('.anchorremotecontrol-list a[data-pos="' + closest[0] + '"]').getAttribute('data-anchor')
+    if (closestAnchor) {
+      document.querySelector('.anchorremotecontrol-list a[data-anchor="' + closestAnchor + '"]').classList.add('active')
+    }
   }
 }
 
